@@ -1,0 +1,11 @@
+# for database queries
+psycopg2>=2.5.4
+
+# for configuration files
+configobj>=5.0.6
+
+# for machine-learning
+tensorflow
+numpy
+pandas
+sklearn

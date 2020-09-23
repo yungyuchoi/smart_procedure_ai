@@ -1,0 +1,12 @@
+MANIFEST
+dist
+build
+.coverage*
+*.egg-info
+*.pyc
+*~
+*.xml
+.idea
+log
+profile
+cfg

@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+# Copyright 2020 Zinnotech, all rights reserved
+
+"""
+Utility to manipulate the Checklist AI database.
+
+  dump      - print the contents of the database to stdout in INI format
+  load      - populate the database with track, vehicle, orders
+  clear     - delete order, vehicle, and vehicle history data
+
+  create-track-snapshot - create a snapshot of the track configuration
+  create-snapshot       - create a snapshot of the dynamic data
+"""
+
+__appname__ = 'oms-db'
+__version__ = '0.12'
+
+import optparse
+import os
+import sys
+
+DIR = os.path.abspath(os.path.dirname(__file__))
+sys.path.insert(0, os.path.join(DIR, '..'))
+
+import cai
+import cai.dbmanager as dbm
+from cai.config import Config
+
+
+KNOWN_DATA = ['all', 'prediction', 'prediction_history']
+
+
+def validate_data_options(opt):
+    if opt not in KNOWN_DATA:
+        print("unknown data set '%s'" % opt)
+        exit(1)
+    return opt
+
+
+class OptParser(optparse.OptionParser):
+    def format_description(self, formatter):
+        return self.description
+
+
+if __name__ == "__main__":
+    usage = """%prog (create | drop | delete ) [options]"""
+    parser = OptParser(usage=usage, description=__doc__)
+    cai.add_basic_options(parser)
+    cai.add_db_options(parser, dbadm_opts=True)
+    parser.add_option("--data-file",
+                      help="data file to be imported into database")
+    parser.add_option("--data", default='all',
+                      help="which data to clear: {data}".format(data=KNOWN_DATA))
+    parser.add_option("-y", action="store_true", help="do not prompt")
+    (options, args) = parser.parse_args()
+
+    if options.version:
+        print("version %s (OMS %s)" % (__version__, cai.__version__))
+        sys.exit(0)
+
+    cai.setup_logging(appname=__appname__, appvers=__version__,
+                      debug=options.debug, filename=options.log_file)
+
+    # first get values from the configuration file
+    config_dict = cai.read_config_file(options.config_file)
+
+    # get the database connection information
+    db_dict = config_dict.get(Config.CAI_DATABASE, {})
+    dbinfo = cai.get_dbinfo(options.db_host, options.db_port, options.db_name,
+                            options.db_user, options.db_pass,
+                            options.db_admin_user, options.db_admin_pass,
+                            db_dict, options.db_uri)
+    dbstr = '%s:%s/%s' % (dbinfo['dbhost'], dbinfo['dbport'], dbinfo['dbname'])
+
+    if 'create' in args:
+        ans = 'y' if options.y else \
+            cai.prompt("create table %s (y/n)? " % dbstr)
+        if ans == 'y':
+            dbm.create_table(**dbinfo)
+    elif 'drop' in args:
+        ans = 'y' if options.y else \
+            cai.prompt("drop table, function and trigger %s (y/n)? " % dbstr)
+        if ans == 'y':
+            dbm.drop_table(**dbinfo)
+    elif 'delete' in args:
+        which_data = validate_data_options(options.data)
+        ans = 'y' if options.y else \
+            cai.prompt("clear %s from %s (y/n)? " % (which_data, dbstr))
+        if ans == 'y':
+            dbm.clear_table(which_data=which_data, **dbinfo)
+    else:
+        parser.print_usage()
