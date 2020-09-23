@@ -1,11 +1,11 @@
 # Copyright 2020 Zinnotech, all rights reserved
 
 """
-Library of components for the Zinnotech CAI implementation.
+Library of components for the Zinnotech SPA implementation.
 """
 
 __version__ = '0.1.0'
-__pkgname__ = 'cai'
+__pkgname__ = 'spa'
 
 import copy
 import csv
@@ -59,7 +59,7 @@ def add_db_options(parser, dbadm_opts=False):
 
 
 def platform_info():
-    lines = ['CAI: %s' % __version__,
+    lines = ['SPA: %s' % __version__,
              'Python: %s' % sys.version.replace('\n', ' '),
              'Host: %s' % platform.node(),
              'Platform: %s' % platform.platform(),
@@ -84,7 +84,7 @@ def get_dbinfo(db_host=None, db_port=None, db_name=None,
     anything in the db dictionary.  override that with any items specified
     in the URI.  override that with any items specified individually.
     """
-    from cai.defaults import Defaults
+    from spa.defaults import Defaults
 
     dbinfo = dict()
     for n in ['dbhost', 'dbport', 'dbname', 'dbuser', 'dbpass',

@@ -22,9 +22,9 @@ import sys
 DIR = os.path.abspath(os.path.dirname(__file__))
 sys.path.insert(0, os.path.join(DIR, '..'))
 
-import cai
-import cai.dbmanager as dbm
-from cai.config import Config
+import spa
+import spa.dbmanager as dbm
+from spa.config import Config
 
 
 KNOWN_DATA = ['all', 'prediction', 'prediction_history']
@@ -45,8 +45,8 @@ class OptParser(optparse.OptionParser):
 if __name__ == "__main__":
     usage = """%prog (create | drop | delete ) [options]"""
     parser = OptParser(usage=usage, description=__doc__)
-    cai.add_basic_options(parser)
-    cai.add_db_options(parser, dbadm_opts=True)
+    spa.add_basic_options(parser)
+    spa.add_db_options(parser, dbadm_opts=True)
     parser.add_option("--data-file",
                       help="data file to be imported into database")
     parser.add_option("--data", default='all',
@@ -55,18 +55,18 @@ if __name__ == "__main__":
     (options, args) = parser.parse_args()
 
     if options.version:
-        print("version %s (OMS %s)" % (__version__, cai.__version__))
+        print("version %s (OMS %s)" % (__version__, spa.__version__))
         sys.exit(0)
 
-    cai.setup_logging(appname=__appname__, appvers=__version__,
+    spa.setup_logging(appname=__appname__, appvers=__version__,
                       debug=options.debug, filename=options.log_file)
 
     # first get values from the configuration file
-    config_dict = cai.read_config_file(options.config_file)
+    config_dict = spa.read_config_file(options.config_file)
 
     # get the database connection information
-    db_dict = config_dict.get(Config.CAI_DATABASE, {})
-    dbinfo = cai.get_dbinfo(options.db_host, options.db_port, options.db_name,
+    db_dict = config_dict.get(Config.SPA_DATABASE, {})
+    dbinfo = spa.get_dbinfo(options.db_host, options.db_port, options.db_name,
                             options.db_user, options.db_pass,
                             options.db_admin_user, options.db_admin_pass,
                             db_dict, options.db_uri)
@@ -74,18 +74,18 @@ if __name__ == "__main__":
 
     if 'create' in args:
         ans = 'y' if options.y else \
-            cai.prompt("create table %s (y/n)? " % dbstr)
+            spa.prompt("create table %s (y/n)? " % dbstr)
         if ans == 'y':
             dbm.create_table(**dbinfo)
     elif 'drop' in args:
         ans = 'y' if options.y else \
-            cai.prompt("drop table, function and trigger %s (y/n)? " % dbstr)
+            spa.prompt("drop table, function and trigger %s (y/n)? " % dbstr)
         if ans == 'y':
             dbm.drop_table(**dbinfo)
     elif 'delete' in args:
         which_data = validate_data_options(options.data)
         ans = 'y' if options.y else \
-            cai.prompt("clear %s from %s (y/n)? " % (which_data, dbstr))
+            spa.prompt("clear %s from %s (y/n)? " % (which_data, dbstr))
         if ans == 'y':
             dbm.clear_table(which_data=which_data, **dbinfo)
     else:
