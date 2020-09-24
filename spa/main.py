@@ -1,5 +1,3 @@
-#https://www.tensorflow.org/tfx/serving/docker
-
 import sys
 import os
 
@@ -50,7 +48,6 @@ train_features = np.array(train_df)
 val_features = np.array(val_df)
 test_features = np.array(test_df)
 
-
 """
 Normalize the input features using the sklearn StandardScaler. 
  This will set the mean to 0 and standard deviation to 1.
@@ -70,10 +67,8 @@ train_features = scaler.fit_transform(train_features)
 
 val_features = scaler.transform(val_features)
 
-
 train_features = np.clip(train_features, -5, 5)
 val_features = np.clip(val_features, -5, 5)
-
 
 # print('Training labels shape:', train_labels.shape)
 # print('Validation labels shape:', val_labels.shape)
@@ -92,6 +87,8 @@ Define a function that creates a simple neural network
         a dropout layer to reduce over-fitting, 
         and an output sigmoid layer that returns the probability of a transaction being fraudulent:
 """
+
+
 def make_model(output_bias=None):
     if output_bias is not None:
         output_bias = tf.keras.initializers.Constant(output_bias)
@@ -129,7 +126,6 @@ initial_bias = np.log([pos / neg])
 model = make_model(output_bias=initial_bias)
 print(model.predict(train_features))
 
-
 results = model.evaluate(train_features, train_labels, batch_size=BATCH_SIZE, verbose=0)
 print("Loss: {:0.4f}".format(results[0]))
 
@@ -146,8 +142,5 @@ model.fit(
     callbacks=[early_stopping],
     validation_data=(val_features, val_labels))
 
-
 model.save(filepath='../models/guide_1', overwrite=True, include_optimizer=True,
            save_format=None, signatures=None, options=None)
-
-
