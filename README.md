@@ -41,21 +41,8 @@ $ sudo docker run hello-world
 $ ./bin/spa_server.sh
 ```
 
-### AI 서버에 요청 방법
-#### 폴더구조
-    ```
-    ai
-     L bin
-        L run.sh
-     L data
-     L models
-        L guide_1
-        L guide_2
-     L src   
-    ```
-
-## 모델에서 예측 값 얻기
-### curl 
+### AI 서버에서 예측 값 얻기
+#### curl 
 [ 실행 ]
 ```shell script
 [ 가이드 1 의 예측값 얻기 ]
@@ -72,7 +59,7 @@ curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
 {"predictions": [[0.0067783]]}
 ```
 
-### 파이썬
+#### 파이썬
 [ 실행 ]
 ```python
 import json
