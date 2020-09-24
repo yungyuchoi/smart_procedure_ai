@@ -43,7 +43,7 @@ class OptParser(optparse.OptionParser):
 
 
 if __name__ == "__main__":
-    usage = """%prog (create | drop | delete ) [options]"""
+    usage = """%prog (create | drop | delete | create-test-db | drop-test-db) [options]"""
     parser = OptParser(usage=usage, description=__doc__)
     spa.add_basic_options(parser)
     spa.add_db_options(parser, dbadm_opts=True)
@@ -88,5 +88,16 @@ if __name__ == "__main__":
             spa.prompt("clear %s from %s (y/n)? " % (which_data, dbstr))
         if ans == 'y':
             dbm.clear_table(which_data=which_data, **dbinfo)
+    # database for ai test
+    elif 'create-test-db' in args:
+        ans = 'y' if options.y else \
+            spa.prompt("create test database %s (y/n)? " % dbstr)
+        if ans == 'y':
+            dbm.create_test_db(**dbinfo)
+    elif 'drop-test-db' in args:
+        ans = 'y' if options.y else \
+            spa.prompt("drop test database %s (y/n)? " % dbstr)
+        if ans == 'y':
+            dbm.drop_test_db(**dbinfo)
     else:
         parser.print_usage()

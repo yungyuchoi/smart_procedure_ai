@@ -1,9 +1,9 @@
 # SPA
 Smart-procedure AI 저장소 입니다.
 
-## 개발 및 테스트를 위한 SPA software 설치 방법
+## 개발 및 테스트를 위한 SPA 설치 방법
 
-### docker 설치
+### Docker 설치
 - 리눅스는 아래 설명에 따라 설치. 윈도우나 MacOS 는 패키지를 설치
 ```shell script
 # 패키지 관리 도구 업데이트
@@ -46,11 +46,11 @@ $ ./bin/spa_server.sh
 [ 실행 ]
 ```shell script
 [ 가이드 1 의 예측값 얻기 ]
-curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
+$ curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_1:predict
 
 [ 가이드 2 의 예측값 얻기 ]
-curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
+$ curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_2:predict
 ```
 
@@ -74,3 +74,9 @@ result = r.json()
 prediction = result['predictions'][0][0] * 100
 print('prediction: {result}'.format(result=prediction))
 ```
+
+
+
+
+* 가이드 1에 대한 모델인 경우 /models/guide_1/1/ 에 저장 (/1/ 은 버전정보. 강제적으로 폴더 이름에 숫자만 있어야 함)
+* 가이드 2에 대한 모델인 경우 /models/guide_2/1/ 에 저장

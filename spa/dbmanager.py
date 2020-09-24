@@ -78,6 +78,43 @@ def create_table(**kwargs):
             mgr.disconnect()
 
 
+def create_test_db(dbhost, dbport, dbname,
+                        dbuser, dbpass, dbadmuser, dbadmpass):
+    mgr = DBManager()
+    logger.info("create database %s as user %s" %
+                (mkdbstr(dbhost, dbport, dbname), dbadmuser))
+    try:
+        mgr.connect(dbhost, dbport, 'postgres', dbadmuser, dbadmpass)
+        mgr.db_conn.set_isolation_level(
+            psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
+        with mgr.db_conn.cursor() as cur:
+            cur.execute('create database ai_test')
+        mgr.db_conn.commit()
+    except psycopg2.Error as err:
+        logger.error('create database failed: %s' % str(err).strip())
+        if mgr:
+            mgr.db_conn.rollback()
+    finally:
+        if mgr:
+            mgr.disconnect()
+
+
+def drop_test_db(**kwargs):
+    mgr = DBManager()
+    try:
+        mgr.connect(**kwargs)
+        with mgr.db_conn.cursor() as cur:
+            cur.execute('drop database ai_test')
+        mgr.db_conn.commit()
+    except psycopg2.Error as err:
+        logger.error('drop database failed: %s' % str(err).strip())
+        if mgr:
+            mgr.db_conn.rollback()
+    finally:
+        if mgr:
+            mgr.disconnect()
+
+
 class DBManager(object):
 
     def __init__(self):

@@ -1,0 +1,1 @@
+docker stop pgadmin_container postgres_container
