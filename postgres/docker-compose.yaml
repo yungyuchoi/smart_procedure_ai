@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+    postgres:
+        container_name: postgres_container
+        image: "postgres" # use latest official postgres version
+        env_file:
+            - postgres.env # configure postgres
+        volumes:
+            - postgres-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+        ports:
+            - 5432:5432
+        networks:
+            - db_network
+    
+    pgadmin:
+        container_name: pgadmin_container
+        image: dpage/pgadmin4
+        env_file:
+            - pgadmin.env # configure postgres
+        ports:
+            - 5050:80
+        networks:
+            - db_network
+networks:
+    db_network:
+        driver: bridge
+ 
+volumes:
+    postgres-data: # named volumes can be managed easier using docker-compose
+    
