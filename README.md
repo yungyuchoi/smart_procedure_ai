@@ -1,7 +1,7 @@
 # SPA
 Smart-procedure AI 저장소 입니다.
 
-## 개발 및 테스트를 위한 SPA 설치 방법
+## AI 예측 서버 실행
 
 ### Docker 설치
 - 리눅스는 아래 설명에 따라 설치. 윈도우나 MacOS 는 패키지를 설치
@@ -75,6 +75,9 @@ prediction = result['predictions'][0][0] * 100
 print('prediction: {result}'.format(result=prediction))
 ```
 
+## SPA 테이블 설치 
+
+ㅈ
 
 
 
