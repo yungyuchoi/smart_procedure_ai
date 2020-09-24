@@ -88,7 +88,7 @@ def create_test_db(dbhost, dbport, dbname,
         mgr.db_conn.set_isolation_level(
             psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
         with mgr.db_conn.cursor() as cur:
-            cur.execute('create database ai_test')
+            cur.execute('create database %s' % dbname)
         mgr.db_conn.commit()
     except psycopg2.Error as err:
         logger.error('create database failed: %s' % str(err).strip())
@@ -99,12 +99,15 @@ def create_test_db(dbhost, dbport, dbname,
             mgr.disconnect()
 
 
-def drop_test_db(**kwargs):
+def drop_test_db(dbhost, dbport, dbname,
+                         dbuser, dbpass, dbadmuser, dbadmpass):
     mgr = DBManager()
     try:
-        mgr.connect(**kwargs)
+        mgr.connect(dbhost, dbport, 'postgres', dbadmuser, dbadmpass)
+        mgr.db_conn.set_isolation_level(
+            psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
         with mgr.db_conn.cursor() as cur:
-            cur.execute('drop database ai_test')
+            cur.execute('drop database %s' % dbname)
         mgr.db_conn.commit()
     except psycopg2.Error as err:
         logger.error('drop database failed: %s' % str(err).strip())

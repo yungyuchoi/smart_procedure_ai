@@ -93,11 +93,15 @@ if __name__ == "__main__":
         ans = 'y' if options.y else \
             spa.prompt("create test database %s (y/n)? " % dbstr)
         if ans == 'y':
+            dbinfo.pop('dbname')
+            dbinfo['dbname'] = 'ai_test'
             dbm.create_test_db(**dbinfo)
     elif 'drop-test-db' in args:
         ans = 'y' if options.y else \
             spa.prompt("drop test database %s (y/n)? " % dbstr)
         if ans == 'y':
+            dbinfo.pop('dbname')
+            dbinfo['dbname'] = 'ai_test'
             dbm.drop_test_db(**dbinfo)
     else:
         parser.print_usage()
