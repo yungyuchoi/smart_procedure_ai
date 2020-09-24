@@ -77,7 +77,7 @@ print('prediction: {result}'.format(result=prediction))
 
 ## SPA 테이블 설치 
 
-ㅈ
+진행중...
 
 
 
