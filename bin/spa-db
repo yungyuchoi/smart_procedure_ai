@@ -3,18 +3,12 @@
 
 """
 Utility to manipulate the Checklist AI database.
-
-  dump      - print the contents of the database to stdout in INI format
-  load      - populate the database with track, vehicle, orders
-  clear     - delete order, vehicle, and vehicle history data
-
-  create-track-snapshot - create a snapshot of the track configuration
-  create-snapshot       - create a snapshot of the dynamic data
 """
 
-__appname__ = 'oms-db'
-__version__ = '0.12'
+__appname__ = 'spa-db'
+__version__ = '0.1.0'
 
+import csv
 import optparse
 import os
 import sys
@@ -103,5 +97,15 @@ if __name__ == "__main__":
             dbinfo.pop('dbname')
             dbinfo['dbname'] = 'ai_test'
             dbm.drop_test_db(**dbinfo)
+    elif 'create-test-data' in args:
+        check_list = dict()
+        action_count = 0
+        with open('data/check_list.csv') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            for row in csv_reader:
+                check_list[action_count] = {'report_id': row[0], 'step_id': row[1], 'task_id': row[2],
+                                            'action_id': row[3], 'result': row[5]}
+                action_count += 1
+        dbm.create_test_data(check_list, **dbinfo)
     else:
         parser.print_usage()

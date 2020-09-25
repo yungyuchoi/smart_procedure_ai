@@ -8,8 +8,8 @@ build
 *.xml
 .idea
 log
-bak
 profiles
 cfg
+bak/temp
 
 

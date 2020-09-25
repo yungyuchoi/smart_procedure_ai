@@ -46,11 +46,11 @@ $ ./bin/spa_server.sh
 [ 실행 ]
 ```shell script
 [ 가이드 1 의 예측값 얻기 ]
-$ curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
+$ curl -d '{"instances": [[1truetruetrue,0,0true,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_1:predict
 
 [ 가이드 2 의 예측값 얻기 ]
-$ curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
+$ curl -d '{"instances": [[1truetruetrue,0,0true,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_2:predict
 ```
 
@@ -66,7 +66,7 @@ import json
 import requests
 
 print("send a request")
-data = {"instances": [[1,1,1,1,0,0,1,0,0,1,1,1,0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,1]]}
+data = {"instances": [[1truetruetrue,0,0true,0,0truetruetrue,0truetruetrue,0true,0truetrue,0,0truetrue,0truetrue]]}
 url = "http://{ip}:{port}/v1/models/{guide}:predict".format(**{'ip': '34.69.98.244', 'port': 8501, 'guide': 'guide_1'})
 r = requests.post(url, data=json.dumps(data))
 result = r.json()

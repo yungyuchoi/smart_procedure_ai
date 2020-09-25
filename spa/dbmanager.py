@@ -118,6 +118,27 @@ def drop_test_db(dbhost, dbport, dbname,
             mgr.disconnect()
 
 
+def create_test_data(data, **kwargs):
+    mgr = DBManager()
+    try:
+        mgr.connect(**kwargs)
+        sql = """
+            INSERT INTO report_result (report_id, step_id, task_id, action_id, result) VALUES %s"""
+        data_iter = ((
+            data[row]['report_id'],
+            data[row]['step_id'],
+            data[row]['task_id'],
+            data[row]['action_id'],
+            data[row]['result'],
+        ) for row in data)
+        mgr.modify_values(sql, data_iter, 1000)
+    except psycopg2.Error as err:
+        logger.error('creating test data failed: %s' % str(err).strip())
+    finally:
+        if mgr:
+            mgr.disconnect()
+
+
 class DBManager(object):
 
     def __init__(self):
@@ -144,3 +165,11 @@ class DBManager(object):
                 cur.execute(sql)
         except psycopg2.Error as err:
             logger.error("query '%s' failed: %s" % (sql, err))
+
+    def modify_values(self, sql, iter, chunksize=1000):
+        try:
+            with self.db_conn.cursor() as cur:
+                logger.debug("sql: %s" % sql)
+                psycopg2.extras.execute_values(cur, sql, iter, page_size=chunksize)
+        except psycopg2.Error as err:
+            logger.error("query '%s' failed: %s" % ('', err))
