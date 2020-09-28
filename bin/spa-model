@@ -23,12 +23,12 @@ from spa.model_maker import ModelMaker
 from spa.config import Config
 
 
-KNOWN_DATA = ['all', 'prediction', 'prediction_history']
+KNOWN_DATA = []
 
 
 def validate_data_options(opt):
     if opt not in KNOWN_DATA:
-        print("unknown data set '%s'" % opt)
+        print("unknown test_data set '%s'" % opt)
         exit(1)
     return opt
 
@@ -38,16 +38,11 @@ class OptParser(optparse.OptionParser):
         return self.description
 
 
-
 if __name__ == "__main__":
-    usage = """%prog (create | delete) [options]"""
+    usage = """%prog ( create ) [options]"""
     parser = OptParser(usage=usage, description=__doc__)
     spa.add_basic_options(parser)
     spa.add_db_options(parser, dbadm_opts=True)
-    parser.add_option("--data-file",
-                      help="data file to be imported into database")
-    parser.add_option("--data", default='all',
-                      help="which data to clear: {data}".format(data=KNOWN_DATA))
     parser.add_option("--guide-id",
                       help="guide_id to be made into model")
     parser.add_option("-y", action="store_true", help="do not prompt")
@@ -73,16 +68,11 @@ if __name__ == "__main__":
 
     if 'create' in args:
         if options.guide_id:
-            # ans = 'y' if options.y else \
-            #     spa.prompt("create model of guide %s (y/n)? " % options.guide_id)
-            # if ans == 'y':
-            ModelMaker().make_model(options.guide_id, **dbinfo)
-
-
-
+            ans = 'y' if options.y else \
+                spa.prompt("create model of guide %s (y/n)? " % options.guide_id)
+            if ans == 'y':
+                ModelMaker().make_model(options.guide_id, **dbinfo)
         else:
             print("guide_id should be specified")
-    elif 'drop' in args:
-        pass
     else:
         parser.print_usage()

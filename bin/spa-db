@@ -26,7 +26,7 @@ KNOWN_DATA = ['all', 'prediction', 'prediction_history']
 
 def validate_data_options(opt):
     if opt not in KNOWN_DATA:
-        print("unknown data set '%s'" % opt)
+        print("unknown test_data set '%s'" % opt)
         exit(1)
     return opt
 
@@ -37,14 +37,14 @@ class OptParser(optparse.OptionParser):
 
 
 if __name__ == "__main__":
-    usage = """%prog (create | drop | delete | create-test-db | drop-test-db) [options]"""
+    usage = """%prog ( create-table | drop-table | delete-table | create-test-db | drop-test-db ) [options]"""
     parser = OptParser(usage=usage, description=__doc__)
     spa.add_basic_options(parser)
     spa.add_db_options(parser, dbadm_opts=True)
-    parser.add_option("--data-file",
-                      help="data file to be imported into database")
-    parser.add_option("--data", default='all',
-                      help="which data to clear: {data}".format(data=KNOWN_DATA))
+    parser.add_option("--test_data-file",
+                      help="test_data file to be imported into database")
+    parser.add_option("--test_data", default='all',
+                      help="which test_data to clear: {data}".format(data=KNOWN_DATA))
     parser.add_option("-y", action="store_true", help="do not prompt")
     (options, args) = parser.parse_args()
 
@@ -66,17 +66,17 @@ if __name__ == "__main__":
                             db_dict, options.db_uri)
     dbstr = '%s:%s/%s' % (dbinfo['dbhost'], dbinfo['dbport'], dbinfo['dbname'])
 
-    if 'create' in args:
+    if 'create-table' in args:
         ans = 'y' if options.y else \
             spa.prompt("create table %s (y/n)? " % dbstr)
         if ans == 'y':
             dbm.create_table(**dbinfo)
-    elif 'drop' in args:
+    elif 'drop-table' in args:
         ans = 'y' if options.y else \
             spa.prompt("drop table, function and trigger %s (y/n)? " % dbstr)
         if ans == 'y':
             dbm.drop_table(**dbinfo)
-    elif 'delete' in args:
+    elif 'delete-table' in args:
         which_data = validate_data_options(options.data)
         ans = 'y' if options.y else \
             spa.prompt("clear %s from %s (y/n)? " % (which_data, dbstr))
@@ -98,7 +98,7 @@ if __name__ == "__main__":
             dbinfo['dbname'] = 'ai_test'
             dbm.drop_test_db(**dbinfo)
     elif 'create-test-data' in args:
-        with open('../data/result.csv') as csv_file:
+        with open('../test_data/result.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             check_list = dict()
             count = 0
@@ -107,7 +107,7 @@ if __name__ == "__main__":
                 count += 1
         dbm.create_test_report(check_list, **dbinfo)
 
-        with open('../data/check_list.csv') as csv_file:
+        with open('../test_data/check_list.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             check_list = dict()
             count = 0

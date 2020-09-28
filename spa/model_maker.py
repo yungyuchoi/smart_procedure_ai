@@ -47,12 +47,12 @@ class ModelMaker(object):
         Split the dataset into train, validation, and test sets. 
         [ Validation set ]  
           - used during the model fitting to evaluate the loss and any metrics, 
-            however the model is not fit with this data. 
+            however the model is not fit with this test_data. 
         [ Test set ]
           - completely unused during the training phase
-          - only used at the end to evaluate how well the model generalizes to new data.
+          - only used at the end to evaluate how well the model generalizes to new test_data.
         This is especially important with imbalanced datasets
-         where over-fitting is a significant concern from the lack of training data.
+         where over-fitting is a significant concern from the lack of training test_data.
         """
         # Use a utility from sklearn to split and shuffle our dataset.
         train_data, test_data = train_test_split(cleaned_data, test_size=0.2)
@@ -74,8 +74,8 @@ class ModelMaker(object):
          the model is not peeking at the validation or test sets.
         
         
-        There methods are used to center/feature scale of a given data.
-         It basically helps to normalize the data within a particular range
+        There methods are used to center/feature scale of a given test_data.
+         It basically helps to normalize the test_data within a particular range
         For this, we use Z-score method(𝑥′ = x-μ/σ). 
         1.Fit(): Method calculates the parameters μ and σ and saves them as internal objects.
         1.Transform(): Method using these calculated parameters apply the transformation to a particular dataset.

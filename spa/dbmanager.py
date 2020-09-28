@@ -137,7 +137,7 @@ def create_test_report_result(data, **kwargs):
         ) for row in data)
         mgr.modify_values(sql, data_iter, 1000)
     except psycopg2.Error as err:
-        logger.error('creating test report_result data failed: %s' % str(err).strip())
+        logger.error('creating test report_result test_data failed: %s' % str(err).strip())
         if mgr:
             mgr.db_conn.rollback()
     finally:
@@ -158,7 +158,7 @@ def create_test_report(data, **kwargs):
         ) for row in data)
         mgr.modify_values(sql, data_iter, 1000)
     except psycopg2.Error as err:
-        logger.error('creating test report data failed: %s' % str(err).strip())
+        logger.error('creating test report test_data failed: %s' % str(err).strip())
         if mgr:
             mgr.db_conn.rollback()
     finally:
