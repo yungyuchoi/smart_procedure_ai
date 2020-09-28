@@ -98,14 +98,34 @@ if __name__ == "__main__":
             dbinfo['dbname'] = 'ai_test'
             dbm.drop_test_db(**dbinfo)
     elif 'create-test-data' in args:
-        check_list = dict()
-        action_count = 0
-        with open('data/check_list.csv') as csv_file:
+        with open('../data/result.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
+            check_list = dict()
+            count = 0
             for row in csv_reader:
-                check_list[action_count] = {'report_id': row[0], 'step_id': row[1], 'task_id': row[2],
-                                            'action_id': row[3], 'result': row[5]}
-                action_count += 1
-        dbm.create_test_data(check_list, **dbinfo)
+                check_list[count] = {'report_id': row[0], 'guide_id': row[1], 'result': row[2]}
+                count += 1
+        dbm.create_test_report(check_list, **dbinfo)
+
+        with open('../data/check_list.csv') as csv_file:
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            check_list = dict()
+            count = 0
+            for row in csv_reader:
+                check_list[count] = {'report_id': row[1], 'step_id': row[2], 'task_id': row[3],
+                                     'action_id': row[4], 'result': row[6]}
+                count += 1
+        dbm.create_test_report_result(check_list, **dbinfo)
     else:
         parser.print_usage()
+
+"""
+ALTER TABLE report 
+ADD COLUMN result int;
+
+delete from report;
+alter sequence report_id_seq restart;
+
+delete from report_result;
+alter sequence report_result_id_seq restart;
+"""

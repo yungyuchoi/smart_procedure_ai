@@ -9,3 +9,4 @@ tensorflow
 numpy
 pandas
 sklearn
+protobuf
