@@ -20,9 +20,9 @@ class ModelMaker(object):
         pass
 
     def make_model(self, guide_id, **dbinfo):
-        field_row = dbm.get_guide_field(guide_id, **dbinfo)
-        result_dict = dbm.get_report_result(guide_id, **dbinfo)
-        value_dict = dbm.get_report_value(guide_id, **dbinfo)
+        field_row = dbm.get_guide_fields(guide_id, **dbinfo)
+        result_dict = dbm.get_report_results(guide_id, **dbinfo)
+        value_dict = dbm.get_report_values(guide_id, **dbinfo)
         data_array = []
 
         for r_id in result_dict:

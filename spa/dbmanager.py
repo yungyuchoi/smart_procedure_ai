@@ -166,7 +166,7 @@ def create_test_report(data, **kwargs):
             mgr.disconnect()
 
 
-def get_guide_field(guide_id, **kwargs):
+def get_guide_fields(guide_id, **kwargs):
     mgr = DBManager()
     try:
         mgr.connect(**kwargs)
@@ -201,7 +201,7 @@ def get_guide_field(guide_id, **kwargs):
             mgr.disconnect()
 
 
-def get_report_value(guide_id, **kwargs):
+def get_report_values(guide_id, **kwargs):
     mgr = DBManager()
     try:
         mgr.connect(**kwargs)
@@ -255,7 +255,7 @@ def get_report_value(guide_id, **kwargs):
             mgr.disconnect()
 
 
-def get_report_result(guide_id, **kwargs):
+def get_report_results(guide_id, **kwargs):
     mgr = DBManager()
     try:
         mgr.connect(**kwargs)
