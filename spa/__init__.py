@@ -7,17 +7,11 @@ Library of components for the Zinnotech SPA implementation.
 __version__ = '0.1.0'
 __pkgname__ = 'spa'
 
-import copy
-import csv
-import datetime
 import locale
 import logging
 import os
 import platform
-import signal
 import sys
-import time
-import json
 from urllib.parse import urlparse
 from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
 

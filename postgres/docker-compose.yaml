@@ -6,7 +6,7 @@ services:
         env_file:
             - postgres.env # configure postgres
         volumes:
-            - postgres-test_data:/var/lib/postgresql/test_data/ # persist test_data even if container shuts down
+            - postgres-data:/var/lib/postgresql/data/ # persist data even if container shuts down
         ports:
             - 5432:5432
         networks:

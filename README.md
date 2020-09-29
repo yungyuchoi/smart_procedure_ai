@@ -46,11 +46,11 @@ $ ./bin/spa_server.sh
 [ 실행 ]
 ```shell script
 [ 가이드 1 의 예측값 얻기 ]
-$ curl -d '{"instances": [[1truetruetrue,0,0true,0]]}' /
+curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_1:predict
 
 [ 가이드 2 의 예측값 얻기 ]
-$ curl -d '{"instances": [[1truetruetrue,0,0true,0]]}' /
+curl -d '{"instances": [[1,1,1,1,0,0,1,0]]}' /
  -X POST http://localhost:8501/v1/models/guide_2:predict
 ```
 
@@ -66,7 +66,7 @@ import json
 import requests
 
 print("send a request")
-data = {"instances": [[1truetruetrue,0,0true,0,0truetruetrue,0truetruetrue,0true,0truetrue,0,0truetrue,0truetrue]]}
+data = {"instances": [[1,1,1,1,0,0,1,0,0,1,1,1,0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,1]]}
 url = "http://{ip}:{port}/v1/models/{guide}:predict".format(**{'ip': '34.69.98.244', 'port': 8501, 'guide': 'guide_1'})
 r = requests.post(url, data=json.dumps(data))
 result = r.json()
@@ -83,3 +83,6 @@ print('prediction: {result}'.format(result=prediction))
 
 * 가이드 1에 대한 모델인 경우 /models/guide_1/1/ 에 저장 (/1/ 은 버전정보. 강제적으로 폴더 이름에 숫자만 있어야 함)
 * 가이드 2에 대한 모델인 경우 /models/guide_2/1/ 에 저장
+
+
+curl -d '{"instances": [[1,1,1,1,0,0,1,0,0,1,1,1,0,1,1,1,0,1,0,1,1,0,0,1,1,0,1,1]]}' -X POST http://localhost:8080/v1/models/guide_1:predict
