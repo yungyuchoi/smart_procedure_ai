@@ -1,14 +1,13 @@
 FROM tensorflow/serving
 
 # Copy files
-COPY models.config /
 COPY credential.json /
 
 ENV GOOGLE_APPLICATION_CREDENTIALS=credential.json
 
 ENV MODEL_BASE_PATH=gs://ai-model-storage/ai
 
-ENV MODEL_CONFIG_FILE=models.config
+ENV MODEL_CONFIG_FILE=gs://ai-model-storage/ai/models.config
 
 # REST
 EXPOSE 8501
@@ -29,4 +28,4 @@ ENTRYPOINT []
 CMD ["/usr/bin/tf_serving_entrypoint.sh"]
 
 
-#  docker run -it -p 8501:8501 cyg_test
+#  docker run -it -p 8501:8501 tf_serving_gc_storage
