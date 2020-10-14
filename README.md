@@ -7,8 +7,8 @@ Smart-procedure AI 저장소 입니다.
 - 리눅스는 아래 설명에 따라 설치. 윈도우나 MacOS 는 패키지를 설치
 ```shell script
 # 패키지 관리 도구 업데이트
+$ sudo apt upgrade
 $ sudo apt update
-$ sudo apt-get update
 
 # 기존 docker 설치된 리소스 확인 후 발견되면 삭제
 $ sudo apt-get remove docker docker-engine docker.io
