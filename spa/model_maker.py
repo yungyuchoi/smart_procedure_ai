@@ -73,7 +73,6 @@ class ModelMaker(object):
         Note: The StandardScaler is only fit using the train_features to be sure
          the model is not peeking at the validation or test sets.
         
-        
         There methods are used to center/feature scale of a given test_data.
          It basically helps to normalize the test_data within a particular range
         For this, we use Z-score method(𝑥′ = x-μ/σ). 
