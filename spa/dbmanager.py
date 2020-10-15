@@ -185,7 +185,8 @@ def get_guide_fields(guide_id, **kwargs):
                                 WHERE   is_analytics = True
                             ) AS TK ON TK.step_id = ST.id
                             JOIN task_action AS AC ON AC.task_id = TK.id
-                    ORDER BY TK.step_id, TK.id, AC.id;
+                    ORDER BY TK.step_id, TK.id, AC.id -- This should not be changed for AI model
+                    ;
             """.format(guide_id=guide_id)
             rows = mgr.get_all_rows(sql)
             x = dict()
