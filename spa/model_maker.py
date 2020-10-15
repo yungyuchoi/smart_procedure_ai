@@ -133,7 +133,7 @@ class ModelMaker(object):
             callbacks=[early_stopping],
             validation_data=(val_features, val_labels))
 
-        model.save(filepath='../tf_serving/models/guide_{guide_id}/1'.format(guide_id=guide_id), overwrite=True, include_optimizer=True,
+        model.save(filepath='models/guide_{guide_id}/1'.format(guide_id=guide_id), overwrite=True, include_optimizer=True,
                    save_format=None, signatures=None, options=None)
 
 

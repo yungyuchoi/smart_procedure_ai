@@ -1,9 +1,7 @@
 FROM tensorflow/serving
 
-# Copy files
-COPY credential.json /
-
-ENV GOOGLE_APPLICATION_CREDENTIALS=credential.json
+# COPY credential.json /
+# ENV GOOGLE_APPLICATION_CREDENTIALS=credential.json
 
 ENV MODEL_BASE_PATH=gs://ai-model-storage/ai
 
