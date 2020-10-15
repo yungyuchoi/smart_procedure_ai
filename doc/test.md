@@ -48,7 +48,7 @@ $ python bin/spa-model create --config cfg/spa.cfg --guide-id 28
  - 가이드 1에 대한 모델인 경우 /모델 root/guide_1/1/ 에 저장됨 (/1/ 은 버전정보. 강제적으로 폴더 이름에 숫자만 있어야 함)
  - 가이드 2에 대한 모델인 경우 /모델 root/guide_2/1/ 에 저장됨 
 
-그리고 생성된 모델을 tf-serving(ai service server)이 읽을수 있도록 추가된 모델을  `models.config` 에 작성한다.
+그리고 생성된 모델을 tf-serving(AI service)이 읽을수 있도록 추가된 모델을  `models.config` 에 작성한다.
 ```
 model_config_list {
   config {
