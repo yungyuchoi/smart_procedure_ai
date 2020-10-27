@@ -1,4 +1,4 @@
-docker run -t --rm \
+sudo docker run -t --rm \
     --detach --name tensorflow-serving \
     -p 8501:8501 \
     -v "$(pwd)/models:/models/" tensorflow/serving \

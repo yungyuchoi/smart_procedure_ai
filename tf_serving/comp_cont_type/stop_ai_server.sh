@@ -1,1 +1,1 @@
-docker stop tensorflow-serving
+sudo docker stop tensorflow-serving
