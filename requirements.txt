@@ -1,12 +1,11 @@
-# for database queries
-psycopg2
+psycopg2==2.8.5
 
-# for configuration files
-configobj
+configobj==5.0.6
 
-# for machine-learning
-tensorflow
-numpy
-pandas
-sklearn
-protobuf
+tensorflow==2.3.0
+
+pandas==1.1.2
+
+sklearn==0.0
+
+protobuf==3.13.0

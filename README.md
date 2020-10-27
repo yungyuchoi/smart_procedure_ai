@@ -11,10 +11,10 @@ $ sudo apt upgrade
 $ sudo apt update
 
 # 기존 docker 설치된 리소스 확인 후 발견되면 삭제
-$ sudo apt-get remove docker docker-engine docker.io
+$ sudo apt remove docker docker-engine docker.io
 
 # docker를 설치하기 위한 각종 라이브러리 설치
-$ sudo apt-get install apt-transport-https ca-certificates curl software-properties-common -y
+$ sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 
 # curl 명령어를 통해 gpg key 내려받기
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -26,10 +26,10 @@ $ sudo apt-key fingerprint 0EBFCD88
 $ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
 # 패키지 관리 도구 업데이트
-$ sudo apt-get update
+$ sudo apt update
 
 # docker-ce 설치 
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+$ sudo apt install docker-ce docker-ce-cli containerd.io
 
 # Docker 설치 완료 후 테스트로 hello-world 컨테이너 구동
 $ sudo docker run hello-world
