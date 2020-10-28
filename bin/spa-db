@@ -37,7 +37,7 @@ class OptParser(optparse.OptionParser):
 
 
 if __name__ == "__main__":
-    usage = """%prog ( create-table | drop-table | delete-table | create-test-db | drop-test-db ) [options]"""
+    usage = """%prog ( create-table | drop-table | delete-table | create-test-db | drop-test-db | create-test-data ) [options]"""
     parser = OptParser(usage=usage, description=__doc__)
     spa.add_basic_options(parser)
     spa.add_db_options(parser, dbadm_opts=True)
