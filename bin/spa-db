@@ -98,7 +98,7 @@ if __name__ == "__main__":
             dbinfo['dbname'] = 'ai_test'
             dbm.drop_test_db(**dbinfo)
     elif 'create-test-data' in args:
-        with open('/test_data/result.csv') as csv_file:
+        with open('../test_data/result.csv') as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             check_list = dict()
             count = 0
